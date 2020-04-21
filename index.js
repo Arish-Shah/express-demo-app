@@ -1,14 +1,24 @@
 const express = require('express');
-const path = require('path');
+const members = require('./Members');
+const exphbs = require('express-handlebars');
 
 const app = express();
+
+// Handlebars middleware
+app.engine('handlebars', exphbs({ defaultLayout: 'main' }));
+app.set('view engine', 'handlebars');
 
 // Body parser middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
-// Serve static folder
-app.use(express.static(path.join(__dirname, 'public')));
+// Homepage route
+app.get('/', (req, res) =>
+  res.render('index', {
+    title: 'Members App',
+    members
+  })
+);
 
 // Members API Routes
 app.use('/api/members', require('./routes/api/members'));
