@@ -20,6 +20,9 @@ app.get('/', (req, res) =>
   })
 );
 
+// About route
+app.get('/about', (req, res) => res.render('about'));
+
 // Members API Routes
 app.use('/api/members', require('./routes/api/members'));
 
